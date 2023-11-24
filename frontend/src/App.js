@@ -1,25 +1,22 @@
-import logo from './logo.svg';
-import './App.css';
+import {useState} from "react";
+import WeatherShowList from "./components/WeatherShowList";
+import SearchBar from "./components/SearchBar";
+
 
 function App() {
+  const [cityName, setCityName] = useState('');
+  const [weatherList, setWeatherList] = useState([{}]);
+  const [errors, setErrors] = useState(null);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+      <div className="app-container">
+        <h1 className="title-header">Weather Forecast</h1>
+        <SearchBar setErrors={setErrors} setWeatherList={setWeatherList} inputName="City Name" buttonName="Get Forecast"/>
+        <div>
+          <WeatherShowList error = {errors} weatherList = {weatherList}/>
+        </div>
+      </div>
+  )
 }
 
 export default App;
