@@ -4,7 +4,6 @@ import SearchBar from "./components/SearchBar";
 
 
 function App() {
-  const [cityName, setCityName] = useState('');
   const [weatherList, setWeatherList] = useState([{}]);
   const [errors, setErrors] = useState(null);
 

@@ -5,6 +5,7 @@ import lombok.*;
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
+@Builder
 public class WeatherResponseDto {
     private String city;
     private String date;

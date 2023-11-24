@@ -48,16 +48,7 @@ public class WeatherService {
                     LocalDate weatherDate = weather.getDate().toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
                     return weatherDate.isEqual(now) || weatherDate.isEqual(tomorrow);
                 })
-                .map(weather -> {
-                    WeatherResponseDto responseDTO = new WeatherResponseDto();
-                    responseDTO.setCity(weather.getCity());
-                    responseDTO.setDate(dateFormat.format(weather.getDate())); // Convert Date to String in desired format
-                    responseDTO.setDayPhenomenon(weather.getDayPhenomenon());
-                    responseDTO.setNightPhenomenon(weather.getNightPhenomenon());
-                    responseDTO.setTempMax(weather.getTempMax());
-                    responseDTO.setTempMin(weather.getTempMin());
-                    return responseDTO;
-                })
+                .map(weather -> populateResponseDto(dateFormat, weather))
                 .toList();
 
         if (!responseDtoList.isEmpty()) {
@@ -68,6 +59,17 @@ public class WeatherService {
             logger.info("Object with name {} not found in the database.", city);
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+    }
+
+    private WeatherResponseDto populateResponseDto(SimpleDateFormat dateFormat, Weather weather) {
+        return WeatherResponseDto.builder()
+                .city(weather.getCity())
+                .date(dateFormat.format(weather.getDate()))
+                .dayPhenomenon(weather.getDayPhenomenon())
+                .nightPhenomenon(weather.getNightPhenomenon())
+                .tempMax(weather.getTempMax())
+                .tempMin(weather.getTempMin())
+                .build();
     }
 
     @Scheduled(fixedRate = 1800000)
