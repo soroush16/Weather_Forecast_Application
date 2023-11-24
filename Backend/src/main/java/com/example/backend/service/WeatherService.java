@@ -61,17 +61,6 @@ public class WeatherService {
         }
     }
 
-    private WeatherResponseDto populateResponseDto(SimpleDateFormat dateFormat, Weather weather) {
-        return WeatherResponseDto.builder()
-                .city(weather.getCity())
-                .date(dateFormat.format(weather.getDate()))
-                .dayPhenomenon(weather.getDayPhenomenon())
-                .nightPhenomenon(weather.getNightPhenomenon())
-                .tempMax(weather.getTempMax())
-                .tempMin(weather.getTempMin())
-                .build();
-    }
-
     @Scheduled(fixedRate = 1800000)
     public void save() {
         try {
@@ -102,6 +91,17 @@ public class WeatherService {
         } catch (JAXBException | RestClientException e) {
             logger.error("An error occurred: {}", e.getMessage(), e);
         }
+    }
+
+    private WeatherResponseDto populateResponseDto(SimpleDateFormat dateFormat, Weather weather) {
+        return WeatherResponseDto.builder()
+                .city(weather.getCity())
+                .date(dateFormat.format(weather.getDate()))
+                .dayPhenomenon(weather.getDayPhenomenon())
+                .nightPhenomenon(weather.getNightPhenomenon())
+                .tempMax(weather.getTempMax())
+                .tempMin(weather.getTempMin())
+                .build();
     }
 
 
